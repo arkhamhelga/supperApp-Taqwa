@@ -164,11 +164,54 @@ class _HomePageState extends State<HomePage> {
           itemCount: posterlist.length,
           itemBuilder: (context, index, realindex) {
             final poster = posterlist[index];
-            return Container(child: Image.asset(poster));
+            return Container(
+              margin: EdgeInsets.all(15),
+              child: ClipRRect(
+                borderRadius: BorderRadiusGeometry.circular(20),
+                child: Image.asset(
+                  poster,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
           },
-          options: CarouselOptions(),
+          options: CarouselOptions(
+            autoPlay: true,
+            height: 270,
+            enlargeCenterPage: true,
+            viewportFraction: 0.7,
+            onPageChanged: (index, reason) {
+              setState(() => _currentIndex = index);
+            },
+          ),
+        ),
+
+        // DOT INDIKATOR carousel
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: posterlist.asMap().entries.map((entry) {
+            return GestureDetector(
+              onTap: () => _currentIndex.animateToPage(entry.key),
+              child: Container(
+                width: 10,
+                height: 10,
+                margin: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _currentIndex == entry.key
+                    ? Colors.amber
+                    : Colors.grey[400],
+                ),
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
   }
+}
+
+extension on int {
+  void animateToPage(int key) {}
 }
