@@ -36,116 +36,10 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                height: 130,
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/ic_menu_doa.png'),
-                                Text(
-                                  'Doa & zikir',
-                                  style: TextStyle(
-                                    fontFamily: 'PoppinsRegular',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/ic_menu_zakat.png'),
-                                Text(
-                                  'Zakat',
-                                  style: TextStyle(
-                                    fontFamily: 'PoppinsRegular',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/ic_menu_jadwal_sholat.png',
-                                ),
-                                Text(
-                                  'Jadwal Sholat',
-                                  style: TextStyle(
-                                    fontFamily: 'PoppinsRegular',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/ic_play_video_kajian.png',
-                                ),
-                                Text(
-                                  'Video Kajian',
-                                  style: TextStyle(
-                                    fontFamily: 'PoppinsRegular',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // ========================================
+            //[MENU SECTION]
+            // ========================================
+            _buidMenuGridSection(),
             // ========================================
             //[CAROUSEL SECTION]
             // ========================================
@@ -156,6 +50,79 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //=======================================
+  //[MENU GRID SECTION WIDGET]
+  //=======================================
+  Widget _buidMenuItem(
+    String iconPath,
+    String title,
+    String roudname,
+  ) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ]
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(iconPath, width: 35,),
+            const SizedBox(height: 6,),
+            Text(
+              title,
+            style: TextStyle(
+              fontFamily: 'Poppins-Regular',
+              fontSize: 13),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //=======================================
+  //[MENU GRID SECTION WIDGET]
+  //=======================================
+  Widget _buidMenuGridSection() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.count(
+        crossAxisCount: 4,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          _buidMenuItem(
+          'assets/images/ic_menu_doa.png', //icon path
+          'Doa Harian', // title
+          'Doa'), //route name
+          _buidMenuItem(
+          'assets/images/ic_menu_jadwal_sholat.png', //icon path
+          'Jadwal sholat', //title
+          'Sholat'), //route name
+          _buidMenuItem(
+          'assets/images/ic_menu_Zakat.png', //icon patch
+          'Zakat', //title
+          'Zakat'), //route name
+          _buidMenuItem('assets/images/ic_play_video_kajian.png', //icon path
+          'Video Kajian', //title
+        'Kajian Islam'), //route name
+        ],
+      ),
+    );
+  }
+
+  //=======================================
+  //[CAROUSEL SECTION]
+  //=======================================
   Widget _buildCaroucelSection() {
     return Column(
       children: [
@@ -200,8 +167,8 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _currentIndex == entry.key
-                    ? Colors.amber
-                    : Colors.grey[400],
+                      ? Colors.amber
+                      : Colors.grey[400],
                 ),
               ),
             );
