@@ -33,57 +33,121 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            // ========================================
-            //[MENU SECTION]
-            // ========================================
-            _buidMenuGridSection(),
-            // ========================================
-            //[CAROUSEL SECTION]
-            // ========================================
-            _buildCaroucelSection(),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              //=========================================
+              //[MENU WAKTU SHOLAT BY LOKASI]
+              //=========================================
+              _buildHeroSection(),
+        
+              // ========================================
+              //[MENU SECTION]
+              // ========================================
+              _buidMenuGridSection(),
+              // ========================================
+              //[CAROUSEL SECTION]
+              // ========================================
+              _buildCaroucelSection(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   //=======================================
+  //[MENU HERO WIDGET]
+  //=======================================
+  Widget _buildHeroSection() {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Color(0xFFB3E5FC),
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+            ),
+            image: DecorationImage(image: AssetImage('assets/images/bg_afternoon.png'),
+            fit: BoxFit.cover
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Text('Assalamu\'alaikum',
+                style: TextStyle(
+                  fontFamily: 'PoppinsRegular',
+                  color: Colors.white70,
+                  fontSize: 16,
+                  ),
+                ),
+                Text('Ngargoyoso',
+                style: TextStyle(
+                  fontFamily: 'PoppinsSemiBold',
+                  fontSize: 22,
+                  color: Colors.white,
+                  ),
+                ),
+                Text(DateFormat('HH:mm').format(DateTime.now(),),
+                style: TextStyle(
+                  fontFamily: 'PoppinsBold',
+                  fontSize: 50,
+                  height: 1.2,
+                  color: Colors.white
+                ),),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  //=======================================
   //[MENU GRID SECTION WIDGET]
   //=======================================
-  Widget _buidMenuItem(
-    String iconPath,
-    String title,
-    String roudname,
-  ) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ]
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(iconPath, width: 35,),
-            const SizedBox(height: 6,),
-            Text(
-              title,
-            style: TextStyle(
-              fontFamily: 'Poppins-Regular',
-              fontSize: 13),
+  Widget _buidMenuItem(String iconPath, String title, String roudname) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, roudname);
+        },
+        borderRadius: BorderRadius.circular(15),
+        splashColor: Colors.amber.withOpacity(0.2),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
-          ],
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(iconPath, width: 35),
+              const SizedBox(height: 6),
+              Text(
+                title,
+                style: TextStyle(fontFamily: 'Poppins-Regular', fontSize: 13),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -98,23 +162,35 @@ class _HomePageState extends State<HomePage> {
       child: GridView.count(
         crossAxisCount: 4,
         shrinkWrap: true,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _buidMenuItem(
-          'assets/images/ic_menu_doa.png', //icon path
-          'Doa Harian', // title
-          'Doa'), //route name
+            'assets/images/ic_menu_doa.png', //icon path
+            'Doa', // title
+            'Doa',
+          ), //route name
           _buidMenuItem(
-          'assets/images/ic_menu_jadwal_sholat.png', //icon path
-          'Jadwal sholat', //title
-          'Sholat'), //route name
+            'assets/images/ic_menu_jadwal_sholat.png', //icon path
+            'sholat', //title
+            'Sholat',
+          ), //route name
           _buidMenuItem(
-          'assets/images/ic_menu_Zakat.png', //icon patch
-          'Zakat', //title
-          'Zakat'), //route name
-          _buidMenuItem('assets/images/ic_play_video_kajian.png', //icon path
-          'Video Kajian', //title
-        'Kajian Islam'), //route name
+            'assets/images/ic_menu_Zakat.png', //icon patch
+            'Zakat', //title
+            'Zakat',
+          ), //route name
+          _buidMenuItem(
+            'assets/images/ic_menu_doa.png', //icon path
+            'Doa', // title
+            'Doa',
+          ), //route name
+          _buidMenuItem(
+            'assets/images/ic_play_video_kajian.png', //icon path
+            'Kajian', //title
+            'Kajian Islam',
+          ), //route name
         ],
       ),
     );
